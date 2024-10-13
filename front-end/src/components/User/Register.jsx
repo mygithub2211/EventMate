@@ -23,7 +23,7 @@ function RegisterPage() {
 
         try {
             // Register the user
-            const response = await fetch('http://localhost:4000/register', {
+            const response = await fetch('https://event-mate-ten.vercel.app/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

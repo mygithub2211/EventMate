@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function EnrollPage() {
     const navigate = useNavigate()
@@ -25,7 +25,7 @@ function EnrollPage() {
         e.preventDefault()
         try {
             // Send confirmation email
-            const emailResponse = await fetch('http://localhost:4000/send-confirmation-email', {
+            const emailResponse = await fetch('https://event-mate-ten.vercel.app/send-confirmation-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
