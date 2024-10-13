@@ -1,4 +1,4 @@
-.admin-page {
+.container {
     width: 100vw;
     min-height: 100vh;
     display: flex;
@@ -31,9 +31,9 @@ main {
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
     padding: 30px;
-    width: 400px; /* Fixed width for form */
+    width: 400px;
 }
 
 h2 {
@@ -61,7 +61,7 @@ input:focus, textarea:focus {
 .submit-button {
     padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
     cursor: pointer;
     font-size: 16px;

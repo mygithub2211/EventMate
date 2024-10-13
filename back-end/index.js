@@ -7,12 +7,15 @@ const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const cors = require('cors')
 
+
 // Initialize Express app
 const app = express()
+
 
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
 app.use(cors())
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URL)
@@ -46,34 +49,6 @@ app.post('/api/events', async (req, res) => {
 /***********************************************/
 
 
-/********************* PHUC ***********************/
-// API endpoint to reduce slots by 1 when a student enrolls
-app.post('/api/events/:id/reduce-slot', async (req, res) => {
-    const { id } = req.params
-    console.log("here:", id)
-    
-    try {
-        const event = await Event.findById(id)
-
-        if (!event) {
-            return res.status(404).json({ message: 'Event not found' })
-        }
-
-        if (event.slot <= 0) {
-            return res.status(400).json({ message: 'No more slots available' })
-        }
-
-        event.slot -= 1 // Reduce the slot count
-        await event.save() // Save the updated event
-        res.status(200).json({ message: 'Slot reduced successfully!', slot: event.slot })
-    } catch (error) {
-        console.error('Error reducing slot:', error)
-        res.status(500).json({ message: 'Error reducing slot', error })
-    }
-})
-/*****************************************************/
-
-
 /******************* Fetch Events To The Screen *******************/
 // API endpoint to get all events
 app.get('/api/events', async (req, res) => {
@@ -97,7 +72,6 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS  // App-specific password
     }
 })
-
 
 // API route to send a confirmation email
 app.post('/send-confirmation-email', (req, res) => {
@@ -125,10 +99,27 @@ app.post('/send-confirmation-email', (req, res) => {
         return res.status(200).send({ success: true, message: 'Confirmation email sent successfully!' })
     })
 })
+
+// API endpoint to update slots for an event
+app.put('/api/events/:eventId', async (req, res) => {
+    const { eventId } = req.params;
+    const { slot } = req.body; // The updated slot number
+
+    try {
+        const updatedEvent = await Event.findByIdAndUpdate(eventId, { slot }, { new: true });
+        if (!updatedEvent) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+        res.json({ message: 'Slots updated successfully', event: updatedEvent });
+    } catch (error) {
+        console.error('Error updating event slots:', error);
+        res.status(500).json({ message: 'Error updating event slots', error });
+    }
+});
 /**************************************************************/
 
 
-/******************* LOGIN SIGN-UP *******************/
+/******************* LOGIN SIGN-UP **************************/
 // User schema and model
 const userSchema = new mongoose.Schema({
     firstName: String,
@@ -168,7 +159,8 @@ app.post("/login", async (req, res) => {
         res.status(500).json({ error: "Failed to log in" })
     }
 })
-/**********************************************************/
+/*************************************************************/
+
 
 // Basic health check route
 app.get('/', (req, res) => {
