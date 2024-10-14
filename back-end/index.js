@@ -7,24 +7,14 @@ const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const cors = require('cors')
 // Enable CORS for your client domain
-const corsOptions = {
-    origin: 'https://event-mate-client-phi.vercel.app', // Frontend domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-    credentials: true // If you need to allow cookies/auth tokens from different domains
-};
-app.options('*', cors(corsOptions)); // Preflight request handling for all routes
 
-  
-app.use(cors(corsOptions));
-  
 
 // Initialize Express app
 const app = express()
 
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
-//app.use(cors())
+app.use(cors())
 
 
 // MongoDB connection
