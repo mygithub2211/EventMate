@@ -22,7 +22,7 @@ function LoginPage() {
         e.preventDefault()
 
         try {
-            const response = await fetch(`${apiUrl}/login`, {
+            const response = await fetch('https://event-mate-server.vercel.app/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
