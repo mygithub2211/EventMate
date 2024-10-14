@@ -5,11 +5,12 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
-const cors = require('cors')
+
 
 
 // Initialize Express app
 const app = express()
+const cors = require('cors')
 
 // Apply CORS middleware with specific origin
 app.use(cors({
@@ -24,7 +25,6 @@ app.use(express.json())
 
 
   
-
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URL)
