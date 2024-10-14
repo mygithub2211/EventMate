@@ -6,8 +6,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const cors = require('cors')
+// Enable CORS for your client domain
+app.use(cors({
+    origin: 'https://event-mate-client.vercel.app',
+  }));
 
-
+  
 // Initialize Express app
 const app = express()
 
