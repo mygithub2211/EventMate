@@ -10,12 +10,9 @@ const nodemailer = require('nodemailer')
 const app = express()
 const cors = require('cors')
 
-// Apply CORS middleware with specific origin
-app.use(cors())
-
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
-
+app.use(cors())
 
 
 // MongoDB connection
@@ -23,9 +20,7 @@ mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err))
 
-
-
-
+    
 /******************* ADD EVENT *******************/
 // Define Event Schema
 const eventSchema = new mongoose.Schema({
