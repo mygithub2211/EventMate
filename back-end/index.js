@@ -16,6 +16,7 @@ const cors = require('cors')
 app.use(cors({
         origin: ["https://event-mate-client.vercel.app"],
         methods: ["POST", "GET"],
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true
     }
 ))
