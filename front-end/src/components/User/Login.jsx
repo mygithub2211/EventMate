@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import apiUrl from "../../api"; // Import the API URL
+import apiUrl from "../../api"; // Import the API URL 
 
 function LoginPage() {
     const [credentials, setCredentials] = useState({

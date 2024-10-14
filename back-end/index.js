@@ -6,18 +6,23 @@ const express = require('express')
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const cors = require('cors')
-// Enable CORS for your client domain
 
 
 // Initialize Express app
 const app = express()
 
+// Apply CORS middleware with specific origin
+app.use(cors({
+        origin: ["https://event-mate-client.vercel.app"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+))
 
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
 
-// Apply CORS middleware with specific origin
-app.use(cors());
+
   
 
 
@@ -25,6 +30,7 @@ app.use(cors());
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err))
+
 
 
 /******************* ADD EVENT *******************/
@@ -167,30 +173,7 @@ app.post("/login", async (req, res) => {
 
 
 
-const allowCors = fn => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-      res.status(200).end()
-      return
-    }
-    return await fn(req, res)
-  }
-  
-  const handler = (req, res) => {
-    const d = new Date()
-    res.end(d.toString())
-  }
-  
-  module.exports = allowCors(handler)
-  
+
 
 // Basic health check route
 app.get('/', (req, res) => {
