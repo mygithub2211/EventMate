@@ -17,7 +17,7 @@ function EventPage() {
 
     async function fetchEvents() {
         try {
-            const response = await axios.get('https://event-mate-ten.vercel.app/api/events')
+            const response = await axios.get('http://localhost:4000/api/events')
             console.log('API Response:', response.data)
             if (Array.isArray(response.data)) {
                 setEvents(response.data)
