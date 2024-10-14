@@ -20,11 +20,11 @@ app.use(express.json())
 
 // CORS setup for your frontend's domain
 const corsOptions = {
-    origin: '*', 
+    origin: 'https://event-mate-client.vercel.app', 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // Support cookies or Authorization headers
-  };
+};
   
 // Apply CORS middleware with specific origin
 app.use(cors(corsOptions));
