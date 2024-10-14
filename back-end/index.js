@@ -11,13 +11,7 @@ const app = express()
 const cors = require('cors')
 
 // Apply CORS middleware with specific origin
-app.use(cors({
-        origin: ["https://event-mate-client.vercel.app"],
-        methods: ["POST", "GET"],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true
-    }
-))
+app.use(cors())
 
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
@@ -28,23 +22,6 @@ app.use(express.json())
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err))
-
-
-// CORS middleware
-const allowCors = fn => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-        res.status(200).end()
-        return
-    }
-    return await fn(req, res)
-}
 
 
 
@@ -63,7 +40,7 @@ const eventSchema = new mongoose.Schema({
 const Event = mongoose.model('Event', eventSchema)
 
 // API endpoint to add a new event
-app.post('/api/events', allowCors(async (req, res) => {
+app.post('/api/events', async (req, res) => {
     try {
         const newEvent = new Event(req.body)
         await newEvent.save()
@@ -71,13 +48,13 @@ app.post('/api/events', allowCors(async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Error adding event', error })
     }
-}))
+})
 /***********************************************/
 
 
 /******************* Fetch Events To The Screen *******************/
 // API endpoint to get all events
-app.get('/api/events', allowCors(async (req, res) => {
+app.get('/api/events', async (req, res) => {
     try {
         const events = await Event.find() // Fetch all events from the database
         res.json(events) // Send events as response
@@ -85,7 +62,7 @@ app.get('/api/events', allowCors(async (req, res) => {
         console.error('Error fetching events:', error)
         res.status(500).json({ message: 'Error fetching events', error })
     }
-}))
+})
 /*******************************************************************/
 
 
@@ -100,7 +77,7 @@ const transporter = nodemailer.createTransport({
 })
 
 // API route to send a confirmation email
-app.post('/send-confirmation-email', allowCors((req, res) => {
+app.post('/send-confirmation-email',(req, res) => {
     const { firstName, email } = req.body
 
     // Validate incoming request data
@@ -124,10 +101,10 @@ app.post('/send-confirmation-email', allowCors((req, res) => {
         }
         return res.status(200).send({ success: true, message: 'Confirmation email sent successfully!' })
     })
-}))
+})
 
 // API endpoint to update slots for an event
-app.put('/api/events/:eventId', allowCors(async (req, res) => {
+app.put('/api/events/:eventId', async (req, res) => {
     const { eventId } = req.params;
     const { slot } = req.body; // The updated slot number
 
@@ -141,7 +118,7 @@ app.put('/api/events/:eventId', allowCors(async (req, res) => {
         console.error('Error updating event slots:', error);
         res.status(500).json({ message: 'Error updating event slots', error });
     }
-}))
+})
 /**************************************************************/
 
 
@@ -158,7 +135,7 @@ const User = mongoose.model("User", userSchema)
 
 
 // Register route
-app.post("/register", allowCors(async (req, res) => {
+app.post("/register", async (req, res) => {
     const { firstName, lastName, email, password } = req.body
     const newUser = new User({ firstName, lastName, email, password })
 
@@ -169,10 +146,10 @@ app.post("/register", allowCors(async (req, res) => {
         console.error('Error registering user:', err) // Log error for debugging
         res.status(500).json({ success: false, message: "Failed to register user" }) // Return success as false
     }
-}))
+})
 
 // Login route
-app.post("/login", allowCors(async (req, res) => {
+app.post("/login", async (req, res) => {
     const { email, password } = req.body
     try {
         const user = await User.findOne({ email, password })
@@ -184,7 +161,7 @@ app.post("/login", allowCors(async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Failed to log in" })
     }
-}))
+})
 /*************************************************************/
 
 

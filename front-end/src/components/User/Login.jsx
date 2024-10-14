@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import apiUrl from "../../api"; // Import the API URL 
 
 function LoginPage() {
     const [credentials, setCredentials] = useState({
@@ -22,7 +21,7 @@ function LoginPage() {
         e.preventDefault()
 
         try {
-            const response = await fetch('https://event-mate-server.vercel.app/login', {
+            const response = await fetch('http://localhost:4000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
