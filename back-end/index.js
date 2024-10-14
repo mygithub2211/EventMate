@@ -14,8 +14,14 @@ const app = express()
 
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
-app.use(cors())
-
+const corsOptions = {
+    origin: '*', // Allow all origins temporarily
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+}
+  
+app.use(cors(corsOptions)) // Enable CORS for all origins
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URL)
