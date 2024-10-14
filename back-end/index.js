@@ -12,16 +12,24 @@ const cors = require('cors')
 // Initialize Express app
 const app = express()
 
+
 // Use middleware for parsing JSON and enabling CORS
 app.use(express.json())
+
+// CORS setup for your frontend's domain
 const corsOptions = {
-    origin: '*', // Allow all origins temporarily
+    origin: 'https://event-mate-client.vercel.app', // Replace with your frontend domain
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-}
+    credentials: true, // Support cookies or Authorization headers
+  };
   
-app.use(cors(corsOptions)) // Enable CORS for all origins
+// Apply CORS middleware with specific origin
+app.use(cors(corsOptions));
+  
+// Handle preflight (OPTIONS) requests
+app.options('*', cors(corsOptions));
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URL)
