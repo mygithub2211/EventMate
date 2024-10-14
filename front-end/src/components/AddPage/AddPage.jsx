@@ -27,7 +27,7 @@ function AddPage() {
         e.preventDefault()
         
         try {
-            const response = await fetch('http://localhost:4000/api/events', {
+            const response = await fetch('https://event-mate-server.vercel.app/api/events', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

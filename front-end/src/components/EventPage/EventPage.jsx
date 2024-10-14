@@ -17,7 +17,7 @@ function EventPage() {
 
     async function fetchEvents() {
         try {
-            const response = await axios.get('http://localhost:4000/api/events')
+            const response = await axios.get('https://event-mate-server.vercel.app/api/events')
             console.log('API Response:', response.data)
             if (Array.isArray(response.data)) {
                 setEvents(response.data)
@@ -55,7 +55,7 @@ function EventPage() {
                 return event
             })
             setEvents(updatedEvents)
-            await axios.put(`https://event-mate-ten.vercel.app/api/events/${eventId}`, {
+            await axios.put(`https://event-mate-server.vercel.app/api/events/${eventId}`, {
                 slot: updatedEvents.find(event => event._id === eventId).slot
             })
         } catch (error) {

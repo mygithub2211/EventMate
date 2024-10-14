@@ -25,7 +25,7 @@ function EnrollPage() {
         e.preventDefault()
         try {
             // Send confirmation email
-            const emailResponse = await fetch('http://localhost:4000/send-confirmation-email', {
+            const emailResponse = await fetch('https://event-mate-server.vercel.app/send-confirmation-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
