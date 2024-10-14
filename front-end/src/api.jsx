@@ -1,4 +1,4 @@
-const apiUrl = "https://event-mate-server.vercel.app";
+const apiUrl = "https://event-mate-server-omega.vercel.app";
 
 export async function fetchData(endpoint) {
   const response = await fetch(`${apiUrl}/${endpoint}`);
