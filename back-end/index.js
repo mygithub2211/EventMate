@@ -5,10 +5,8 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
-
 const cors = require('cors')
 // Enable CORS for your client domain
-app.use(cors());
 
 
 // Initialize Express app
